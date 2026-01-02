@@ -1,0 +1,12 @@
+1.tytvoreni sql slozky tabulky,view , data 
+2.backend app.py - flask aplikacem 
+          config.py - konfigurace(db,porty atd)
+          database.py - pripojeni k DB
+          __init__ - repa tridy 
+
+3.config - configurace db 
+4.databaze file 
+
+ProductRepository  →  všechno co se týká tabulky products
+UserRepository     →  všechno co se týká tabulky users
+OrderRepository    →  všechno co se týká tabulky orders
