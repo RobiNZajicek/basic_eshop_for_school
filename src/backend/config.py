@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-
+#udela z .env soubor promenne a v databazi je pouzije pro pripojeni
 # Nacte .env soubor (pokud existuje)
 load_dotenv()
 

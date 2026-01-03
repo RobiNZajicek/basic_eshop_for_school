@@ -5,7 +5,7 @@ class Database:
     """Trida pro spravu pripojeni k databazi"""
     
     _connection = None
-    
+    #connectne k databazi jiz vytvorenym spojenim
     @classmethod
     def get_connection(cls):
         """Vrati pripojeni k databazi (singleton pattern)"""
@@ -14,6 +14,7 @@ class Database:
         return cls._connection
     
     @classmethod
+    #zkontroluje jestli je spojeni zavrene
     def _is_connection_closed(cls):
         """Zkontroluje jestli je spojeni zavrene"""
         try:
@@ -23,6 +24,7 @@ class Database:
             return True
     
     @classmethod
+    #vytvori spojeni
     def _create_connection(cls):
         """Vytvori nove pripojeni"""
         try:
@@ -33,7 +35,7 @@ class Database:
         except pyodbc.Error as e:
             print(f"Chyba pripojeni k databazi: {e}")
             raise
-    
+    #uzavre spojeni
     @classmethod
     def close_connection(cls):
         """Uzavre pripojeni"""
@@ -41,7 +43,8 @@ class Database:
             cls._connection.close()
             cls._connection = None
             print("Odpojeno od databaze.")
-    
+    #vrati tabulku jako pole objektu
+    #pro select dotaz
     @classmethod
     def execute_query(cls, query, params=None):
         """Provede SELECT dotaz a vrati vysledky"""
@@ -57,6 +60,8 @@ class Database:
             print(f"Chyba dotazu: {e}")
             raise
     
+    #vrati pocet zaznamu
+    #pro insert/update/delete dotaz
     @classmethod
     def execute_non_query(cls, query, params=None):
         """Provede INSERT/UPDATE/DELETE dotaz"""
