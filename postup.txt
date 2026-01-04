@@ -56,3 +56,6 @@ POST /api/orders            - nova objednavka (3 tabulky!)
 POST /api/users/transfer    - prevod kreditu (transakce!)
 GET  /api/report            - agregace 3+ tabulek
 POST /api/import/products   - import JSON
+
+
+
