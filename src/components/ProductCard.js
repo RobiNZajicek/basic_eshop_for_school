@@ -6,11 +6,6 @@ export default function ProductCard({ product, onAddToCart }) {
     
     return (
         <div className="group card hover:shadow-xl hover:shadow-emerald-500/5">
-            {/* Product Image Placeholder */}
-            <div className="aspect-square rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 mb-4 flex items-center justify-center overflow-hidden">
-                <div className="w-16 h-16 rounded-full bg-zinc-700/50 group-hover:scale-110 transition-transform duration-500" />
-            </div>
-            
             {/* Product Info */}
             <div className="space-y-3">
                 <h3 className="text-lg font-semibold text-zinc-100 group-hover:text-emerald-400 transition-colors line-clamp-1">

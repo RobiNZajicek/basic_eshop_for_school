@@ -91,11 +91,6 @@ export default function CartPage() {
                     <div className="space-y-4">
                         {cart.map(item => (
                             <div key={item.id} className="card flex items-center gap-6">
-                                {/* Product Icon */}
-                                <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center flex-shrink-0">
-                                    <div className="w-10 h-10 rounded-full bg-zinc-700/50" />
-                                </div>
-                                
                                 {/* Product Info */}
                                 <div className="flex-1 min-w-0">
                                     <h3 className="text-lg font-semibold text-zinc-100 truncate">{item.name}</h3>
