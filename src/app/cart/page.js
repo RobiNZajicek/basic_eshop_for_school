@@ -92,10 +92,8 @@ export default function CartPage() {
                         {cart.map(item => (
                             <div key={item.id} className="card flex items-center gap-6">
                                 {/* Product Icon */}
-                                <div className="w-20 h-20 rounded-xl bg-zinc-800 flex items-center justify-center flex-shrink-0">
-                                    <span className="text-3xl opacity-40">
-                                        {item.category_id === 1 ? '📱' : item.category_id === 2 ? '👕' : '📚'}
-                                    </span>
+                                <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center flex-shrink-0">
+                                    <div className="w-10 h-10 rounded-full bg-zinc-700/50" />
                                 </div>
                                 
                                 {/* Product Info */}

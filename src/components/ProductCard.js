@@ -8,9 +8,7 @@ export default function ProductCard({ product, onAddToCart }) {
         <div className="group card hover:shadow-xl hover:shadow-emerald-500/5">
             {/* Product Image Placeholder */}
             <div className="aspect-square rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 mb-4 flex items-center justify-center overflow-hidden">
-                <div className="text-6xl opacity-20 group-hover:scale-110 transition-transform duration-500">
-                    {product.category_id === 1 ? '📱' : product.category_id === 2 ? '👕' : '📚'}
-                </div>
+                <div className="w-16 h-16 rounded-full bg-zinc-700/50 group-hover:scale-110 transition-transform duration-500" />
             </div>
             
             {/* Product Info */}
