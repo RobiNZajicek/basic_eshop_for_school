@@ -1,8 +1,11 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
+
 #udela z .env soubor promenne a v databazi je pouzije pro pripojeni
-# Nacte .env soubor (pokud existuje)
-load_dotenv()
+# Nacte .env soubor z root adresare projektu
+env_path = Path(__file__).parent.parent.parent / '.env'
+load_dotenv(env_path)
 
 class Config:
     """Konfigurace aplikace - nacita z ENV nebo pouzije defaults"""
