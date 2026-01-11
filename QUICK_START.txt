@@ -1,0 +1,115 @@
+================================================================
+        E-SHOP - RYCHLY START PRO TESTERA
+        Projekt: D1 - Repository Pattern
+================================================================
+
+POZADAVKY (overit pred instalaci):
+- Python 3.10+     (python --version)
+- Node.js 18+      (node --version)  
+- ODBC Driver 17   (v ODBC Data Sources)
+- SQL Server Management Studio
+- Git              (git --version)
+
+================================================================
+KROK 1: STAHNOUT PROJEKT
+================================================================
+
+git clone <url-repozitare>
+cd e-shop
+
+================================================================
+KROK 2: PRIPRAVIT DATABAZI (v SSMS)
+================================================================
+
+1. Otevrit SQL Server Management Studio
+2. Pripojit se k serveru
+3. Pravý klik na databázi -> New Query
+4. Spustit SQL skripty v tomto poradi:
+
+   a) src/sql/01_create_tables.sql   (vytvori 5 tabulek)
+   b) src/sql/02_create_views.sql    (vytvori 2 views)
+   c) src/sql/03_seed_data.sql       (naplni testovaci data)
+
+5. Overit: 5 tabulek + 2 views v databazi
+
+================================================================
+KROK 3: KONFIGURACE
+================================================================
+
+1. Zkopirovat .env.example -> .env
+2. Otevrit .env a vyplnit:
+
+   DB_SERVER=<adresa-serveru>
+   DB_NAME=<nazev-databaze>
+   DB_USER=<uzivatel>
+   DB_PASSWORD=<heslo>
+   DB_DRIVER=ODBC Driver 17 for SQL Server
+
+================================================================
+KROK 4: SPUSTIT BACKEND
+================================================================
+
+V terminalu (PowerShell):
+
+pip install flask pyodbc python-dotenv flask-cors
+cd src/backend
+python app.py
+
+OCEKAVANY VYSTUP:
+==================================================
+E-SHOP API SERVER
+==================================================
+Server: http://127.0.0.1:5000
+==================================================
+
+OVERENI: Otevrit http://localhost:5000/api/health
+-> Musi vratit: {"database": "connected", "status": "ok"}
+
+================================================================
+KROK 5: SPUSTIT FRONTEND (novy terminal!)
+================================================================
+
+Otevrit DRUHY terminal (backend musi bezet!):
+
+cd e-shop
+npm install
+npm run dev
+
+OCEKAVANY VYSTUP:
+▲ Next.js 16.x.x
+- Local: http://localhost:3000
+
+OVERENI: Otevrit http://localhost:3000
+-> Musi se zobrazit homepage e-shopu
+
+================================================================
+HOTOVO! MUZETE TESTOVAT
+================================================================
+
+Stranky aplikace:
+- http://localhost:3000           Homepage
+- http://localhost:3000/products  Produkty
+- http://localhost:3000/cart      Kosik
+- http://localhost:3000/admin     Admin panel + Report
+
+Testovaci scenare jsou v: doc/*.pdf
+
+================================================================
+CASTÉ PROBLEMY
+================================================================
+
+"ModuleNotFoundError: flask"
+-> Spustit: pip install flask pyodbc python-dotenv flask-cors
+
+"Login failed for user"
+-> Zkontrolovat heslo v .env
+
+"Failed to fetch" na frontendu
+-> Backend nebezi - spustit python app.py
+
+"ODBC Driver not found"
+-> Nainstalovat ODBC Driver 17 for SQL Server
+
+================================================================
+KONTAKT: zajicek3@spsejecna.cz
+================================================================
