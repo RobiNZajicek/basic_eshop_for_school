@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-1">
-            {children}
+        {children}
           </main>
           <footer className="border-t border-zinc-800 py-8 mt-auto">
             <div className="max-w-7xl mx-auto px-6 text-center text-zinc-500 text-sm">

@@ -109,7 +109,7 @@ Otevřete v prohlížeči nebo použijte curl/Postman:
 | `/api/categories` | GET | Seznam kategorií (JSON) |
 | `/api/users` | GET | Seznam uživatelů (JSON) |
 | `/api/orders` | GET | Seznam objednávek (JSON) |
-| `/api/reports/summary` | GET | Statistiky (JSON) |
+| `/api/report` | GET | Statistiky (JSON) |
 
 ---
 

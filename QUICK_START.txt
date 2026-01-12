@@ -60,10 +60,10 @@ VARIANTA A - Z GitHub (doporuceno):
    cd C:\Users\VaseJmeno\Desktop
 
 3. Naklonujte repozitar:
-   git clone https://github.com/user/repo-name.git
+   git clone https://github.com/RobiNZajicek/basic_eshop_for_school.git
 
 4. Prejdete do slozky:
-   cd repo-name/e-shop
+   cd basic_eshop_for_school
 
 VARIANTA B - Ze ZIP souboru:
 ----------------------------
@@ -391,10 +391,10 @@ MUSI VRATIT JSON s produkty:
 KROK 7.4 - Test reportu
 -----------------------
 Otevrete:
-   http://localhost:5000/api/reports/summary
+   http://localhost:5000/api/report
 
 MUSI VRATIT JSON se statistikami:
-{"total_orders": X, "total_revenue": X, ...}
+{"total_orders": X, "total_revenue": X, "total_users": X, ...}
 
 ================================================================
 8. RESENI PROBLEMU

@@ -38,7 +38,7 @@ export default function Home() {
         window.dispatchEvent(new Event('storage'));
     }
 
-    return (
+  return (
         <div className="min-h-screen">
             {/* Hero Section */}
             <section className="relative overflow-hidden">
@@ -55,7 +55,7 @@ export default function Home() {
                     <h1 className="text-5xl md:text-7xl font-bold text-zinc-100 mb-6 tracking-tight">
                         Moderní
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600"> E-Shop</span>
-                    </h1>
+          </h1>
                     
                     <p className="text-xl text-zinc-400 max-w-2xl mx-auto mb-10">
                         Školní projekt demonstrující Repository Pattern, transakce a práci s relační databází.
@@ -96,7 +96,7 @@ export default function Home() {
                                 <div className="h-8 bg-zinc-800 rounded w-1/2" />
                             </div>
                         ))}
-                    </div>
+        </div>
                 ) : featured.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {featured.map(product => (
@@ -146,8 +146,8 @@ export default function Home() {
                         <h3 className="text-lg font-semibold text-zinc-100 mb-2">REST API</h3>
                         <p className="text-zinc-500 text-sm">Flask backend s CRUD operacemi</p>
                     </div>
-                </div>
-            </section>
         </div>
-    );
+            </section>
+    </div>
+  );
 }
