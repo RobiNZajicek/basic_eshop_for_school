@@ -1,0 +1,30 @@
+================================================
+   VITEJTE! ZACNETE ZDE
+   E-Shop - Databazovy projekt (D1)
+================================================
+
+KROK 1: Otevrete soubor QUICK_START.txt
+        (je ve stejne slozce jako tento soubor)
+
+KROK 2: Postupujte podle navodu krok za krokem
+
+================================================
+RYCHLY PREHLED CO BUDETE POTREBOVAT:
+================================================
+
+[ ] SQL Server Management Studio (SSMS)
+[ ] Vase prihlasovaci udaje k databazi:
+    - Server: ________________
+    - Databaze: ______________
+    - Login: _________________
+    - Heslo: _________________
+
+[ ] Python (python --version)
+[ ] Node.js (node --version)
+
+================================================
+POKUD NEMATE PRIHLASOVACI UDAJE K DATABAZI:
+Zeptejte se ucitele nebo spravce!
+================================================
+
+Autor: zajicek3@spsejecna.cz

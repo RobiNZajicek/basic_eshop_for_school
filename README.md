@@ -2,7 +2,26 @@
 
 ## ⚠️ OZNACENI: D1 - Repository Pattern
 
-Tento projekt splnuje zadani **D1 - Repository Pattern** pro predmet Databaze.
+---
+
+# 🚀 ZACNETE ZDE
+
+> **Stáhli jste projekt a nevíte co dál?**
+
+### Varianta 1: Máte soubory lokálně
+1. Otevřete soubor **`QUICK_START.txt`**
+2. Postupujte krok za krokem
+
+### Varianta 2: Jste na GitHubu
+1. Stáhněte projekt: **Code → Download ZIP**
+2. Rozbalte ZIP
+3. Otevřete **`QUICK_START.txt`**
+
+### ⚠️ Budete potřebovat:
+- Přihlašovací údaje k databázi (server, login, heslo) - **zeptejte se učitele!**
+- SQL Server Management Studio
+- Python 3.10+
+- Node.js 18+
 
 ---
 
