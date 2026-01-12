@@ -14,7 +14,7 @@ Tento projekt splnuje zadani **D1 - Repository Pattern** pro predmet Databaze.
 | **Backend (Python/Flask)** | `/src/backend/` |
 | **Frontend (Next.js)** | `/src/app/`, `/src/components/` |
 | **Dokumentace** | `/doc/` |
-| **Testovaci scenare** | `/doc/test_scenario_*.md` |
+| **Testovaci scenare** | `/test/` |
 | **Konfigurace** | `.env.example` → `.env` |
 
 ---
@@ -250,6 +250,9 @@ e-shop/
 ├── requirements.txt        ← Python závislosti
 │
 ├── doc/                    ← DOKUMENTACE
+│   └── DOKUMENTACE.pdf
+│
+├── test/                   ← TESTOVACÍ SCÉNÁŘE
 │   ├── test_scenario_1_installation.md
 │   ├── test_scenario_2_functions.md
 │   └── test_scenario_3_errors.md
@@ -290,11 +293,15 @@ e-shop/
 
 ## 🧪 TESTOVACÍ SCÉNÁŘE
 
-Testovací scénáře jsou ve složce `/doc/`:
+Testovací scénáře jsou ve složce `/test/`:
 
-1. **test_scenario_1_installation.md** - Instalace a spuštění
-2. **test_scenario_2_functions.md** - Testování funkcí
-3. **test_scenario_3_errors.md** - Testování chybových stavů
+| Soubor | Popis |
+|--------|-------|
+| `test_scenario_1_installation.md` | Instalace a spuštění |
+| `test_scenario_2_functions.md` | Testování funkcí |
+| `test_scenario_3_errors.md` | Testování chybových stavů |
+
+K dispozici také jako PDF.
 
 ---
 
