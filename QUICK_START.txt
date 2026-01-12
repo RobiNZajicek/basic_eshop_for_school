@@ -1,59 +1,290 @@
 ================================================================
-        E-SHOP - RYCHLY START PRO TESTERA
+        E-SHOP - KOMPLETNI INSTALACNI PRIRUCKA
         Projekt: D1 - Repository Pattern
+        Autor: zajicek3@spsejecna.cz
 ================================================================
 
-POZADAVKY (overit pred instalaci):
-- Python 3.10+     (python --version)
-- Node.js 18+      (node --version)  
-- ODBC Driver 17   (v ODBC Data Sources)
-- SQL Server Management Studio
-- Git              (git --version)
+Tento navod je urcen pro SKOLNI PC bez predchozi konfigurace.
+Postupujte PRESNE podle kroku, nic nepreskaakujte.
 
 ================================================================
-KROK 1: STAHNOUT PROJEKT
+OBSAH
 ================================================================
-
-git clone <url-repozitare>
-cd e-shop
-
-================================================================
-KROK 2: PRIPRAVIT DATABAZI (v SSMS)
-================================================================
-
-1. Otevrit SQL Server Management Studio
-2. Pripojit se k serveru
-3. Pravý klik na databázi -> New Query
-4. Spustit SQL skripty v tomto poradi:
-
-   a) src/sql/01_create_tables.sql   (vytvori 5 tabulek)
-   b) src/sql/02_create_views.sql    (vytvori 2 views)
-   c) src/sql/03_seed_data.sql       (naplni testovaci data)
-
-5. Overit: 5 tabulek + 2 views v databazi
+1. Kontrola pozadavku
+2. Stahnuti projektu
+3. Nastaveni databaze v SSMS
+4. Konfigurace projektu (.env)
+5. Spusteni backendu
+6. Spusteni frontendu
+7. Overeni funkcnosti
+8. Reseni problemu
 
 ================================================================
-KROK 3: KONFIGURACE
+1. KONTROLA POZADAVKU
 ================================================================
 
-1. Zkopirovat .env.example -> .env
-2. Otevrit .env a vyplnit:
+Otevrete PowerShell (Windows + X -> Windows PowerShell)
+a spustte tyto prikazy:
 
-   DB_SERVER=<adresa-serveru>
-   DB_NAME=<nazev-databaze>
-   DB_USER=<uzivatel>
-   DB_PASSWORD=<heslo>
-   DB_DRIVER=ODBC Driver 17 for SQL Server
+PRIKAZ                          OCEKAVANY VYSLEDEK
+--------------------------------------------------------------
+python --version                Python 3.10.x nebo vyssi
+node --version                  v18.x.x nebo vyssi
+npm --version                   9.x.x nebo vyssi
+git --version                   git version 2.x.x
+
+POKUD NECO CHYBI:
+- Python: https://www.python.org/downloads/
+- Node.js: https://nodejs.org/ (LTS verze)
+- Git: https://git-scm.com/downloads
+
+KONTROLA ODBC DRIVERU:
+1. Stisknete Windows + S
+2. Napiste "ODBC Data Sources (64-bit)"
+3. Otevrete
+4. Kliknete na zalozku "Drivers"
+5. Musi tam byt "ODBC Driver 17 for SQL Server"
+
+POKUD CHYBI ODBC DRIVER:
+Stahnete z: https://go.microsoft.com/fwlink/?linkid=2249006
+(Microsoft ODBC Driver 17 for SQL Server)
 
 ================================================================
-KROK 4: SPUSTIT BACKEND
+2. STAHNUTI PROJEKTU
 ================================================================
 
-V terminalu (PowerShell):
+VARIANTA A - Z GitHub (doporuceno):
+-----------------------------------
+1. Otevrete PowerShell
+2. Prejdete do slozky kde chcete projekt:
+   cd C:\Users\VaseJmeno\Desktop
 
-pip install flask pyodbc python-dotenv flask-cors
-cd src/backend
-python app.py
+3. Naklonujte repozitar:
+   git clone https://github.com/user/repo-name.git
+
+4. Prejdete do slozky:
+   cd repo-name/e-shop
+
+VARIANTA B - Ze ZIP souboru:
+----------------------------
+1. Rozbalte ZIP soubor na Plochu
+2. Otevrete PowerShell
+3. Prejdete do slozky:
+   cd C:\Users\VaseJmeno\Desktop\e-shop
+
+OVERENI - v PowerShell napiste:
+   dir
+
+MUSI SE ZOBRAZIT:
+- node_modules (slozka)
+- src (slozka)
+- package.json
+- .env.example
+- atd.
+
+================================================================
+3. NASTAVENI DATABAZE V SQL SERVER MANAGEMENT STUDIO
+================================================================
+
+KROK 3.1 - Otevrit SSMS
+-----------------------
+1. Stisknete Windows + S
+2. Napiste "SQL Server Management Studio"
+3. Otevrete aplikaci (muze chvili trvat nez se nacte)
+
+KROK 3.2 - Pripojit se k serveru
+--------------------------------
+Objevi se okno "Connect to Server":
+
+| Pole                | Hodnota                              |
+|---------------------|--------------------------------------|
+| Server type         | Database Engine                      |
+| Server name         | YOURSERVER\SQLEXPRESS nebo localhost |
+| Authentication      | SQL Server Authentication            |
+| Login               | vase_uzivatelske_jmeno               |
+| Password            | vase_heslo                           |
+
+POZNAMKA: Server name zjistite od ucitele nebo admina.
+Na skolnich PC je to casto neco jako:
+- YOURPC\SQLEXPRESS
+- sql.skola.cz
+- localhost (pokud bezi lokalne)
+
+Kliknete "Connect"
+
+KROK 3.3 - Vybrat/Vytvorit databazi
+-----------------------------------
+V leve casti SSMS vidite "Object Explorer":
+
+[+] SERVERNAME
+    [+] Databases
+        [+] System Databases
+        [+] vase_databaze    <-- TUTO POUZIJTE
+
+POKUD NEMATE DATABAZI:
+1. Pravy klik na "Databases"
+2. "New Database..."
+3. Database name: eshop_db (nebo jine jmeno)
+4. OK
+
+KROK 3.4 - Otevrit Query okno
+-----------------------------
+1. Kliknete na VASI databazi (aby byla oznacena)
+2. Kliknete na "New Query" v horni liste
+   (nebo Ctrl + N)
+3. Otevere se prazdne okno pro SQL prikazy
+
+DULEZITE: V horni casti Query okna je dropdown 
+          s nazvem databaze - OVERTE ze je vybrana
+          spravna databaze!
+
+KROK 3.5 - Spustit SQL skripty
+------------------------------
+MUSI SE SPUSTIT VE SPRAVNEM PORADI!
+
+SKRIPT 1: Vytvoreni tabulek
+...........................
+1. Otevrete soubor: src/sql/01_create_tables.sql
+2. Oznacte CELY obsah (Ctrl + A)
+3. Zkopirujte (Ctrl + C)
+4. Vlepte do Query okna v SSMS (Ctrl + V)
+5. Kliknete "Execute" (nebo F5)
+
+OCEKAVANY VYSLEDEK:
+"Commands completed successfully."
+
+POKUD VIDITE CHYBU "Table already exists":
+- Nejprve smazte existujici tabulky:
+  DROP TABLE IF EXISTS order_items;
+  DROP TABLE IF EXISTS orders;
+  DROP TABLE IF EXISTS products;
+  DROP TABLE IF EXISTS categories;
+  DROP TABLE IF EXISTS users;
+- Spustte (F5)
+- Pak spustte 01_create_tables.sql znovu
+
+SKRIPT 2: Vytvoreni views
+.........................
+1. Smazte obsah Query okna
+2. Otevrete soubor: src/sql/02_create_views.sql
+3. Zkopirujte a vlepte
+4. Execute (F5)
+
+OCEKAVANY VYSLEDEK:
+"Commands completed successfully."
+
+SKRIPT 3: Naplneni testovacimi daty
+...................................
+1. Smazte obsah Query okna
+2. Otevrete soubor: src/sql/03_seed_data.sql
+3. Zkopirujte a vlepte
+4. Execute (F5)
+
+OCEKAVANY VYSLEDEK:
+"(X row(s) affected)" - pro kazdy INSERT
+
+KROK 3.6 - Overeni databaze
+---------------------------
+V Object Explorer:
+1. Rozkliknete [+] vase_databaze
+2. Rozkliknete [+] Tables
+
+MUSI TAM BYT 5 TABULEK:
+- dbo.categories
+- dbo.order_items
+- dbo.orders
+- dbo.products
+- dbo.users
+
+3. Rozkliknete [+] Views
+
+MUSI TAM BYT 2 VIEWS:
+- dbo.v_order_details
+- dbo.v_product_stats
+
+OVERENI DAT:
+Napiste do Query okna a spustte:
+   SELECT * FROM users;
+   SELECT * FROM products;
+   SELECT * FROM categories;
+
+Musi vratit nejaka data (testovaci uzivatele, produkty, atd.)
+
+================================================================
+4. KONFIGURACE PROJEKTU (.env)
+================================================================
+
+KROK 4.1 - Vytvorit .env soubor
+-------------------------------
+1. V PowerShell (ve slozce e-shop):
+   copy .env.example .env
+
+   NEBO v Pruzkumniku:
+   - Zkopirujte soubor .env.example
+   - Prejmenujte kopii na .env
+
+KROK 4.2 - Upravit .env
+-----------------------
+Otevrete .env v textovem editoru (Notepad, VS Code, atd.)
+
+OBSAH SOUBORU:
+--------------
+DB_SERVER=<adresa-serveru>
+DB_NAME=<nazev-databaze>
+DB_USER=<uzivatel>
+DB_PASSWORD=<heslo>
+DB_DRIVER=ODBC Driver 17 for SQL Server
+
+VYPLNTE PODLE VASICH UDAJU:
+---------------------------
+PRIKLAD pro skolni server:
+DB_SERVER=sql.skola.cz
+DB_NAME=zajicek3_db
+DB_USER=zajicek3
+DB_PASSWORD=mojetajneheslo123
+DB_DRIVER=ODBC Driver 17 for SQL Server
+
+PRIKLAD pro lokalni SQL Express:
+DB_SERVER=localhost\SQLEXPRESS
+DB_NAME=eshop_db
+DB_USER=sa
+DB_PASSWORD=Password123
+DB_DRIVER=ODBC Driver 17 for SQL Server
+
+ULOZIT SOUBOR! (Ctrl + S)
+
+DULEZITE:
+- Zadne mezery kolem "="
+- Zadne uvozovky kolem hodnot
+- Heslo presne tak jak ho mate v SSMS
+
+================================================================
+5. SPUSTENI BACKENDU
+================================================================
+
+KROK 5.1 - Otevrit PowerShell terminal
+--------------------------------------
+1. Otevrete novy PowerShell
+2. Prejdete do slozky projektu:
+   cd C:\Users\VaseJmeno\Desktop\e-shop
+
+KROK 5.2 - Nainstalovat Python knihovny
+---------------------------------------
+Spustte prikaz:
+   pip install flask pyodbc python-dotenv flask-cors
+
+OCEKAVANY VYSTUP:
+"Successfully installed flask-X.X.X pyodbc-X.X.X ..."
+
+POKUD VIDITE "pip is not recognized":
+- Python neni spravne nainstalovan
+- Zkuste: python -m pip install flask pyodbc python-dotenv flask-cors
+
+KROK 5.3 - Spustit backend server
+---------------------------------
+Spustte prikazy:
+   cd src/backend
+   python app.py
 
 OCEKAVANY VYSTUP:
 ==================================================
@@ -61,55 +292,193 @@ E-SHOP API SERVER
 ==================================================
 Server: http://127.0.0.1:5000
 ==================================================
+ * Running on http://127.0.0.1:5000
 
-OVERENI: Otevrit http://localhost:5000/api/health
--> Musi vratit: {"database": "connected", "status": "ok"}
+POKUD VIDITE CHYBU "Login failed for user":
+- Zkontrolujte heslo v .env souboru
+- RESTARTUJTE server (Ctrl+C a python app.py znovu)
+
+KROK 5.4 - Overit backend
+-------------------------
+NECHTE TERMINAL BEZET!
+Otevrete webovy prohlizec a jdete na:
+   http://localhost:5000/api/health
+
+OCEKAVANA ODPOVED:
+{"database": "connected", "status": "ok"}
+
+POKUD VIDITE CHYBU:
+{"status": "error", "message": "..."}
+- Prectte chybovou zpravu
+- Opravte .env podle chyby
+- Restartujte backend (Ctrl+C, python app.py)
 
 ================================================================
-KROK 5: SPUSTIT FRONTEND (novy terminal!)
+6. SPUSTENI FRONTENDU
 ================================================================
 
-Otevrit DRUHY terminal (backend musi bezet!):
+DULEZITE: Backend MUSI bezet v prvnim terminalu!
+          Neukoncujte ho!
 
-cd e-shop
-npm install
-npm run dev
+KROK 6.1 - Otevrit DRUHY terminal
+---------------------------------
+1. Otevrete NOVY PowerShell (ne ten kde bezi backend!)
+2. Prejdete do slozky projektu:
+   cd C:\Users\VaseJmeno\Desktop\e-shop
+
+KROK 6.2 - Nainstalovat Node.js knihovny
+----------------------------------------
+Spustte prikaz:
+   npm install
+
+OCEKAVANY VYSTUP:
+"added XXX packages in Xs"
+
+Toto muze trvat 1-3 minuty. POCKEJTE.
+
+POKUD VIDITE "npm is not recognized":
+- Node.js neni nainstalovan
+- Nainstalujte z https://nodejs.org/
+
+KROK 6.3 - Spustit frontend
+---------------------------
+Spustte prikaz:
+   npm run dev
 
 OCEKAVANY VYSTUP:
 ▲ Next.js 16.x.x
-- Local: http://localhost:3000
+- Local:        http://localhost:3000
+- Environments: .env
+✓ Starting...
+✓ Ready in Xs
 
-OVERENI: Otevrit http://localhost:3000
--> Musi se zobrazit homepage e-shopu
-
-================================================================
-HOTOVO! MUZETE TESTOVAT
-================================================================
-
-Stranky aplikace:
-- http://localhost:3000           Homepage
-- http://localhost:3000/products  Produkty
-- http://localhost:3000/cart      Kosik
-- http://localhost:3000/admin     Admin panel + Report
-
-Testovaci scenare jsou v: doc/*.pdf
+POKUD PORT 3000 JE OBSAZENY:
+Next.js automaticky pouzije port 3001
+Pak pouzijte: http://localhost:3001
 
 ================================================================
-CASTÉ PROBLEMY
+7. OVERENI FUNKCNOSTI
 ================================================================
 
-"ModuleNotFoundError: flask"
--> Spustit: pip install flask pyodbc python-dotenv flask-cors
+KROK 7.1 - Otevrit aplikaci
+---------------------------
+Otevrete webovy prohlizec a jdete na:
+   http://localhost:3000
 
-"Login failed for user"
--> Zkontrolovat heslo v .env
+MUSI SE ZOBRAZIT:
+- Homepage e-shopu s produkty
+- Navigace nahore (Produkty, Kosik, Admin)
 
-"Failed to fetch" na frontendu
--> Backend nebezi - spustit python app.py
+KROK 7.2 - Test stranek
+-----------------------
+Proklikejte vsechny stranky:
 
-"ODBC Driver not found"
--> Nainstalovat ODBC Driver 17 for SQL Server
+| URL                          | Co musi fungovat           |
+|------------------------------|----------------------------|
+| http://localhost:3000        | Homepage s produkty        |
+| http://localhost:3000/products | Seznam vsech produktu    |
+| http://localhost:3000/cart   | Kosik (muze byt prazdny)   |
+| http://localhost:3000/admin  | Admin panel + Report       |
+
+KROK 7.3 - Test API
+-------------------
+Otevrete v prohlizeci:
+   http://localhost:5000/api/products
+
+MUSI VRATIT JSON s produkty:
+[{"id": 1, "name": "iPhone 15", ...}, ...]
+
+KROK 7.4 - Test reportu
+-----------------------
+Otevrete:
+   http://localhost:5000/api/reports/summary
+
+MUSI VRATIT JSON se statistikami:
+{"total_orders": X, "total_revenue": X, ...}
 
 ================================================================
-KONTAKT: zajicek3@spsejecna.cz
+8. RESENI PROBLEMU
+================================================================
+
+PROBLEM: "ModuleNotFoundError: No module named 'flask'"
+RESENI:  pip install flask pyodbc python-dotenv flask-cors
+
+PROBLEM: "Login failed for user 'XXX'"
+RESENI:  
+  1. Overte heslo v SSMS (zkuste se prihlasit)
+  2. Opravte heslo v .env
+  3. RESTARTUJTE backend (Ctrl+C, python app.py)
+
+PROBLEM: "Failed to fetch" na frontendu
+RESENI:  Backend nebezi. Spustte python app.py v prvnim terminalu.
+
+PROBLEM: "ODBC Driver 17 for SQL Server not found"
+RESENI:  Nainstalujte ODBC Driver:
+         https://go.microsoft.com/fwlink/?linkid=2249006
+
+PROBLEM: "'next' is not recognized"
+RESENI:  Spustte: npm install
+
+PROBLEM: "Port 3000 is in use"
+RESENI:  Pouzijte http://localhost:3001 misto 3000
+
+PROBLEM: "Cannot connect to database"
+RESENI:
+  1. Overte ze SQL Server bezi
+  2. Overte Server name v SSMS
+  3. Overte .env hodnoty
+  4. Zkontrolujte firewall/sit
+
+PROBLEM: "Tables don't exist"
+RESENI:  Spustte SQL skripty v SSMS (viz Krok 3.5)
+
+PROBLEM: "Empty response" na /api/products
+RESENI:  Spustte 03_seed_data.sql pro testovaci data
+
+================================================================
+STRUKTURAR PROJEKTU
+================================================================
+
+e-shop/
+├── src/
+│   ├── app/                  # Next.js frontend stranky
+│   │   ├── page.js           # Homepage
+│   │   ├── products/page.js  # Seznam produktu
+│   │   ├── cart/page.js      # Kosik
+│   │   └── admin/page.js     # Admin panel
+│   ├── backend/
+│   │   ├── app.py            # Flask API server
+│   │   ├── config.py         # Konfigurace (.env)
+│   │   ├── database.py       # Pripojeni k DB
+│   │   └── repositories/     # Repository Pattern
+│   │       ├── base_repository.py
+│   │       ├── user_repository.py
+│   │       ├── product_repository.py
+│   │       ├── order_repository.py
+│   │       └── category_repository.py
+│   └── sql/
+│       ├── 01_create_tables.sql  # Struktura DB
+│       ├── 02_create_views.sql   # Views pro reporty
+│       └── 03_seed_data.sql      # Testovaci data
+├── test/
+│   ├── test_scenario_1_installation.pdf
+│   ├── test_scenario_2_functions.pdf
+│   └── test_scenario_3_errors.pdf
+├── doc/
+│   └── DOKUMENTACE.pdf
+├── .env.example              # Sablona pro .env
+├── .env                      # VASE konfigurace (vytvorit!)
+├── package.json              # Node.js dependencies
+└── QUICK_START.txt           # Tento soubor
+
+================================================================
+KONTAKT
+================================================================
+Email: zajicek3@spsejecna.cz
+
+V pripade problemu:
+1. Prectte chybovou zpravu
+2. Zkontrolujte tento navod
+3. Kontaktujte autora
+
 ================================================================
