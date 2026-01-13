@@ -32,19 +32,47 @@
 
 ### 2. Import databázové struktury
 
-1. Otevřete SQL Server Management Studio (SSMS)
-2. Připojte se k databázovému serveru (např. `localhost\SQLEXPRESS` nebo školní server)
-3. Vytvořte novou databázi:
-   ```sql
-   CREATE DATABASE eshop_db
-   ```
-4. Vyberte databázi a otevřete New Query
-5. Spusťte skripty v tomto pořadí:
-   - `src/sql/01_create_tables.sql`
-   - `src/sql/02_create_views.sql`
-   - `src/sql/03_seed_data.sql`
+**2.1 Otevření SSMS:**
+1. Stiskněte Windows + S
+2. Napište "SQL Server Management Studio"
+3. Otevřete aplikaci (může chvíli trvat)
 
-6. **Očekávaný výsledek:** Databáze obsahuje 5 tabulek a 2 pohledy
+**2.2 Připojení k serveru:**
+Po spuštění se automaticky objeví okénko "Connect to Server".
+
+| Pole | Co tam napsat |
+|------|---------------|
+| Server type | Database Engine (již předvyplněno) |
+| Server name | NÁZEV VAŠEHO PC (viz níže) |
+| Authentication | SQL Server Authentication |
+| Login | sa |
+| Password | student |
+
+**Jak zjistit název PC:**
+- Windows + Pause/Break → Název zařízení
+- NEBO pravý klik na "Tento počítač" → Vlastnosti
+
+**Alternativní Server names (pokud název PC nefunguje):**
+- localhost
+- localhost\SQLEXPRESS
+- .\SQLEXPRESS
+
+Klikněte "Connect"
+
+**2.3 Vytvoření databáze:**
+1. Pravý klik na "Databases" → "New Database..."
+2. Database name: `eshop_db`
+3. OK
+
+**2.4 Spuštění SQL skriptů:**
+1. Klikněte na databázi `eshop_db`
+2. Klikněte "New Query" (nebo Ctrl+N)
+3. Spusťte skripty v tomto pořadí:
+   - `src/sql/01_create_tables.sql` → Execute (F5)
+   - `src/sql/02_create_views.sql` → Execute (F5)
+   - `src/sql/03_seed_data.sql` → Execute (F5)
+
+4. **Očekávaný výsledek:** Databáze obsahuje 5 tabulek a 2 pohledy
 
 ---
 
@@ -55,14 +83,22 @@
    ```
    copy .env.example .env
    ```
-3. Upravte `.env` soubor s vašimi údaji:
+3. Upravte `.env` soubor (standardní školní nastavení):
    ```
-   DB_SERVER=localhost\SQLEXPRESS
+   DB_SERVER=NAZEV-VASEHO-PC
    DB_NAME=eshop_db
-   DB_USER=vase_jmeno
-   DB_PASSWORD=vase_heslo
+   DB_USER=sa
+   DB_PASSWORD=student
    DB_DRIVER=ODBC Driver 17 for SQL Server
-   FLASK_DEBUG=True
+   ```
+   
+   **Příklad** (pokud se PC jmenuje PC-UCEBNA01):
+   ```
+   DB_SERVER=PC-UCEBNA01
+   DB_NAME=eshop_db
+   DB_USER=sa
+   DB_PASSWORD=student
+   DB_DRIVER=ODBC Driver 17 for SQL Server
    ```
 4. **Očekávaný výsledek:** Soubor `.env` obsahuje správné přihlašovací údaje
 
