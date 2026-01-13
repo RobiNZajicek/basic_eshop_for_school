@@ -111,6 +111,20 @@ Klikněte "Connect"
    ```
    pip install flask pyodbc python-dotenv flask-cors
    ```
+
+**Pokud "pip is not recognized" - zkuste alternativy:**
+```
+python -m pip install flask pyodbc python-dotenv flask-cors
+```
+```
+py -m pip install flask pyodbc python-dotenv flask-cors
+```
+```
+C:\Python312\python.exe -m pip install flask pyodbc python-dotenv flask-cors
+```
+
+**Tip:** Najděte v `C:\` složku Python312, Python311, Python310... a použijte tu cestu.
+
 3. **Očekávaný výsledek:** Všechny balíčky jsou nainstalovány bez chyb
 
 ---
@@ -125,6 +139,15 @@ Klikněte "Connect"
    ```
    python app.py
    ```
+
+**Pokud "python is not recognized" - zkuste alternativy:**
+```
+py app.py
+```
+```
+C:\Python312\python.exe app.py
+```
+
 3. **Očekávaný výsledek:** V terminálu se zobrazí:
    ```
    ==================================================
