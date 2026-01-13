@@ -94,23 +94,37 @@ KROK 3.1 - Otevrit SSMS
 
 KROK 3.2 - Pripojit se k serveru
 --------------------------------
-Objevi se okno "Connect to Server":
+Po spusteni SSMS se AUTOMATICKY objevi okenko "Connect to Server".
 
-| Pole                | Hodnota                              |
+VYPLNTE TAKTO (standardni skolni nastaveni):
+---------------------------------------------
+| Pole                | Co tam napsat                        |
 |---------------------|--------------------------------------|
-| Server type         | Database Engine                      |
-| Server name         | YOURSERVER\SQLEXPRESS nebo localhost |
+| Server type         | Database Engine (uz je predvyplneno) |
+| Server name         | NAZEV VASEHO PC (viz nize jak zjistit)|
 | Authentication      | SQL Server Authentication            |
-| Login               | vase_uzivatelske_jmeno               |
-| Password            | vase_heslo                           |
+| Login               | sa                                   |
+| Password            | student                              |
 
-POZNAMKA: Server name zjistite od ucitele nebo admina.
-Na skolnich PC je to casto neco jako:
-- YOURPC\SQLEXPRESS
-- sql.skola.cz
-- localhost (pokud bezi lokalne)
+JAK ZJISTIT NAZEV PC:
+1. Stisknete Windows + Pause/Break
+   NEBO kliknete pravym na "Tento pocitac" -> Vlastnosti
+2. Najdete "Nazev zarizeni" nebo "Computer name"
+3. PRIKLAD: Pokud se PC jmenuje "PC-UCEBNA01"
+   tak do Server name napiste: PC-UCEBNA01
 
-Kliknete "Connect"
+ALTERNATIVNI SERVER NAMES (zkuste pokud nazev PC nefunguje):
+- localhost
+- localhost\SQLEXPRESS  
+- .\SQLEXPRESS
+- (local)
+
+Po vyplneni kliknete "Connect"
+
+POKUD PRIPOJENI SELHALO:
+- Zkontrolujte ze SQL Server bezi (services.msc -> SQL Server)
+- Zkuste jiny Server name z alternativ vyse
+- Zeptejte se ucitele na spravne pripojovaci udaje
 
 KROK 3.3 - Vybrat/Vytvorit databazi
 -----------------------------------
@@ -237,19 +251,24 @@ DB_DRIVER=ODBC Driver 17 for SQL Server
 
 VYPLNTE PODLE VASICH UDAJU:
 ---------------------------
-PRIKLAD pro skolni server:
-DB_SERVER=sql.skola.cz
-DB_NAME=zajicek3_db
-DB_USER=zajicek3
-DB_PASSWORD=mojetajneheslo123
-DB_DRIVER=ODBC Driver 17 for SQL Server
-
-PRIKLAD pro lokalni SQL Express:
-DB_SERVER=localhost\SQLEXPRESS
+PRIKLAD pro SKOLNI PC (standardni nastaveni):
+DB_SERVER=NAZEV-VASEHO-PC
 DB_NAME=eshop_db
 DB_USER=sa
-DB_PASSWORD=Password123
+DB_PASSWORD=student
 DB_DRIVER=ODBC Driver 17 for SQL Server
+
+KONKRETNI PRIKLAD (pokud se PC jmenuje PC-UCEBNA01):
+DB_SERVER=PC-UCEBNA01
+DB_NAME=eshop_db
+DB_USER=sa
+DB_PASSWORD=student
+DB_DRIVER=ODBC Driver 17 for SQL Server
+
+ALTERNATIVNI SERVER VALUES (zkuste pokud nefunguje):
+DB_SERVER=localhost
+DB_SERVER=localhost\SQLEXPRESS
+DB_SERVER=.\SQLEXPRESS
 
 ULOZIT SOUBOR! (Ctrl + S)
 
