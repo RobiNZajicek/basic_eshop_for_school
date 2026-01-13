@@ -296,14 +296,39 @@ OCEKAVANY VYSTUP:
 "Successfully installed flask-X.X.X pyodbc-X.X.X ..."
 
 POKUD VIDITE "pip is not recognized":
-- Python neni spravne nainstalovan
-- Zkuste: python -m pip install flask pyodbc python-dotenv flask-cors
+---------------------------------------
+Zkuste tyto alternativy (jedna z nich bude fungovat):
+
+VARIANTA 1:
+   python -m pip install flask pyodbc python-dotenv flask-cors
+
+VARIANTA 2:
+   py -m pip install flask pyodbc python-dotenv flask-cors
+
+VARIANTA 3 (plna cesta - skolni PC):
+   C:\Python312\python.exe -m pip install flask pyodbc python-dotenv flask-cors
+
+VARIANTA 4 (jina verze Pythonu):
+   C:\Python311\python.exe -m pip install flask pyodbc python-dotenv flask-cors
+   C:\Python310\python.exe -m pip install flask pyodbc python-dotenv flask-cors
+
+JAK NAJIT PYTHON NA SKOLNIM PC:
+1. Otevrete Pruzkumnik souboru
+2. Jdete do C:\
+3. Hledejte slozky: Python312, Python311, Python310, Python39...
+4. Pouzijte cestu k te slozce co najdete
 
 KROK 5.3 - Spustit backend server
 ---------------------------------
 Spustte prikazy:
    cd src/backend
    python app.py
+
+POKUD "python is not recognized":
+   py app.py
+   
+   NEBO plna cesta:
+   C:\Python312\python.exe app.py
 
 OCEKAVANY VYSTUP:
 ==================================================
