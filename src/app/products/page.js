@@ -1,21 +1,27 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getProducts } from '@/lib/api';
+import { getProducts, getCategories } from '@/lib/api';
 import ProductCard from '@/components/ProductCard';
 
 export default function ProductsPage() {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        loadProducts();
+        loadData();
     }, []);
 
-    async function loadProducts() {
+    async function loadData() {
         try {
-            const data = await getProducts();
-            setProducts(data);
+            const [productsData, categoriesData] = await Promise.all([
+                getProducts(),
+                getCategories()
+            ]);
+            setProducts(productsData);
+            setCategories(categoriesData);
         } catch (err) {
             setError('Chyba při načítání produktů');
         } finally {
@@ -37,6 +43,11 @@ export default function ProductsPage() {
         window.dispatchEvent(new Event('storage'));
     }
 
+    // Filtrované produkty
+    const filteredProducts = selectedCategory
+        ? products.filter(p => p.category_id === selectedCategory)
+        : products;
+
     if (error) {
         return (
             <div className="max-w-7xl mx-auto px-6 py-16">
@@ -56,12 +67,46 @@ export default function ProductsPage() {
     return (
         <div className="max-w-7xl mx-auto px-6 py-16">
             {/* Header */}
-            <div className="mb-12">
+            <div className="mb-8">
                 <h1 className="text-4xl font-bold text-zinc-100 mb-3">Všechny produkty</h1>
                 <p className="text-zinc-500">
-                    {loading ? 'Načítám...' : `${products.length} produktů v nabídce`}
+                    {loading ? 'Načítám...' : `${filteredProducts.length} produktů v nabídce`}
                 </p>
             </div>
+
+            {/* Category Filter */}
+            {!loading && categories.length > 0 && (
+                <div className="mb-8">
+                    <div className="flex flex-wrap gap-2">
+                        <button
+                            onClick={() => setSelectedCategory(null)}
+                            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                                selectedCategory === null
+                                    ? 'bg-emerald-500 text-white'
+                                    : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
+                            }`}
+                        >
+                            Vše ({products.length})
+                        </button>
+                        {categories.map(cat => {
+                            const count = products.filter(p => p.category_id === cat.id).length;
+                            return (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setSelectedCategory(cat.id)}
+                                    className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                                        selectedCategory === cat.id
+                                            ? 'bg-emerald-500 text-white'
+                                            : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200'
+                                    }`}
+                                >
+                                    {cat.name} ({count})
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
 
             {/* Products Grid */}
             {loading ? (
@@ -78,9 +123,9 @@ export default function ProductsPage() {
                         </div>
                     ))}
                 </div>
-            ) : products.length > 0 ? (
+            ) : filteredProducts.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {products.map(product => (
+                    {filteredProducts.map(product => (
                         <ProductCard 
                             key={product.id} 
                             product={product} 
@@ -95,8 +140,14 @@ export default function ProductsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                         </svg>
                     </div>
-                    <h2 className="text-xl font-semibold text-zinc-400 mb-2">Žádné produkty</h2>
-                    <p className="text-zinc-600">Přidejte produkty v admin panelu</p>
+                    <h2 className="text-xl font-semibold text-zinc-400 mb-2">
+                        {selectedCategory ? 'Žádné produkty v této kategorii' : 'Žádné produkty'}
+                    </h2>
+                    <p className="text-zinc-600">
+                        {selectedCategory 
+                            ? 'Zkuste vybrat jinou kategorii' 
+                            : 'Přidejte produkty v admin panelu'}
+                    </p>
                 </div>
             )}
         </div>
