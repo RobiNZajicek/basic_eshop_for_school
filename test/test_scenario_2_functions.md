@@ -77,15 +77,17 @@
 1. Na stránce `/admin` najděte sekci "Import produktů"
 2. Vložte tento JSON:
    ```json
-   [
-     {
-       "name": "Test Produkt",
-       "price": 999,
-       "description": "Testovací produkt",
-       "category_id": 1,
-       "stock": 10
-     }
-   ]
+   {
+     "products": [
+       {
+         "name": "Test Produkt",
+         "price": 999,
+         "description": "Testovací produkt",
+         "category_id": 1,
+         "stock": 10
+       }
+     ]
+   }
    ```
 3. Klikněte na "Importovat"
 4. **Očekávaný výsledek:** Produkt je přidán do databáze
