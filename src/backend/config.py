@@ -34,6 +34,7 @@ class Config:
                 f"UID={cls.DB_USER};"
                 f"PWD={cls.DB_PASSWORD};"
                 f"TrustServerCertificate=yes;"
+                f"MARS_Connection=yes;"
             )
         else:
             # Windows Authentication
@@ -42,4 +43,5 @@ class Config:
                 f"SERVER={cls.DB_SERVER};"
                 f"DATABASE={cls.DB_NAME};"
                 f"Trusted_Connection=yes;"
+                f"MARS_Connection=yes;"
             )
