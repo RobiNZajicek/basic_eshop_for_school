@@ -207,6 +207,24 @@ def get_categories_with_counts():
 # USERS
 # ============================================
 
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    """Vrati vsechny uzivatele"""
+    try:
+        users = UserRepository.get_all()
+        result = []
+        for u in users:
+            result.append({
+                "id": u[0],
+                "email": u[1],
+                "name": u[3],
+                "credits": float(u[4]) if u[4] else 0,
+                "created_at": str(u[5]) if u[5] else None
+            })
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/users', methods=['POST'])
 def create_user():
     """Registrace noveho uzivatele"""
@@ -279,6 +297,24 @@ def transfer_credits():
 # ============================================
 # ORDERS - CRUD PRES VICE TABULEK!
 # ============================================
+
+@app.route('/api/orders', methods=['GET'])
+def get_orders():
+    """Vrati vsechny objednavky"""
+    try:
+        orders = OrderRepository.get_all()
+        result = []
+        for o in orders:
+            result.append({
+                "id": o[0],
+                "user_id": o[1],
+                "status": o[2],
+                "total_price": float(o[3]) if o[3] else 0,
+                "created_at": str(o[4]) if o[4] else None
+            })
+        return jsonify(result), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/orders', methods=['POST'])
 def create_order():
